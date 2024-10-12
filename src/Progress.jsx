@@ -1,31 +1,33 @@
 import React from "react";
+import styled from "styled-components";
 
-const Progress = ({ seconds, minutes }) => {
-  const refPercent = useRef(100);
-  let resultTime = +seconds + minutes * 60;
-  let restWorkTimer = 0;
-  let percentOfSecond = 0;
-  let visibility = false;
+const ProgressTimer = styled.div`
+  margin-bottom: 10px;
+  padding: 8px;
+  text-align: center;
+  font-size: 30px;
+  color: #3e3eb9;
+`;
 
-  if (resultTime) {
-    visibility = false
-    percentOfSecond = 100 / resultTime;
-    restWorkTimer = refPercent.current - percentOfSecond;
-    refPercent.current = restWorkTimer;
-  } else {
-    visibility = true;
-  }
+const Title = styled.h1`
+  font-weight: 800;
+  text-align: center;
+  font-size: 40px;
+  margin: 10px;
+`;
+
+const Progress = ({ seconds, minutes, timeRef }) => {
+  const resultTime = +timeRef.current.seconds + timeRef.current.minutes * 60;
+  const countDownTime = +seconds + minutes * 60;
+  const percentOfCountDown = resultTime / 100;
+  const progress = 100 - countDownTime / percentOfCountDown;
 
   return (
     <>
-      <p>Прогресс</p>
-      <div className="progress">
-        {visibility
-          ? "Задайте таймер"
-          : restWorkTimer >= 0
-          ? restWorkTimer + percentOfSecond
-          : 0}
-      </div>
+      <Title>Прогресс</Title>
+      <ProgressTimer>
+        {progress >= 0 ? `${Math.floor(progress)} %` : 100 + " %"}
+      </ProgressTimer>
     </>
   );
 };

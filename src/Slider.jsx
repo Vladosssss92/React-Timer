@@ -1,6 +1,42 @@
 import { useEffect, useRef, useState } from "react";
-import "./style.css";
+import styled from "styled-components";
 import Progress from "./Progress";
+import Button from "./Button";
+
+const Title = styled.h1`
+  font-weight: 800;
+  text-align: center;
+  font-size: 60px;
+  margin: 10px;
+`;
+
+const WrapTimeInput = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const TimeInput = styled.input`
+  font-size: 18px;
+  width: 45%;
+  height: 40px;
+  border: 1px solid gray;
+  border-radius: 8px;
+  color: #3e3eb9;
+`;
+
+const TimeInputRange = styled.input`
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+`;
+
+const TimerOut = styled.div`
+  margin-bottom: 10px;
+  padding: 8px;
+  text-align: center;
+  font-size: 50px;
+  color: #3e3eb9;
+`;
 
 const Slider = () => {
   const [seconds, setSeconds] = useState(0);
@@ -87,9 +123,9 @@ const Slider = () => {
   }, [seconds, stop]);
   return (
     <>
-      <div>Таймер</div>
-      <div className="inputTime">
-        <input
+      <Title>Таймер</Title>
+      <WrapTimeInput>
+        <TimeInput
           type="number"
           className="inputMinutes"
           min={0}
@@ -98,7 +134,7 @@ const Slider = () => {
           value={!disableInput ? minutes : 0}
           disabled={disableInput}
         />
-        <input
+        <TimeInput
           type="number"
           className="inputSecond"
           min={0}
@@ -107,9 +143,9 @@ const Slider = () => {
           value={!disableInput ? seconds : 0}
           disabled={disableInput}
         />
-      </div>
+      </WrapTimeInput>
       <div className="inputSlider">
-        <input
+        <TimeInputRange
           type="range"
           step={15}
           min={0}
@@ -119,18 +155,18 @@ const Slider = () => {
           disabled={disableInput}
         />
       </div>
-      <div className="outTime">
+      <TimerOut>
         {`${minutes < 10 ? `0${minutes}` : minutes}:${
           seconds < 10 ? `0${seconds}` : seconds
         }`}
-      </div>
+      </TimerOut>
       <Progress seconds={seconds} minutes={minutes} timeRef={refProgressTime} />
-      <button onClick={handlePausePlayClick}>
+      <Button click={handlePausePlayClick}>
         {startOrStopButton ? "Старт" : "Пауза"}
-      </button>
-      <button onClick={stopCountdown} disabled={disableStopButton}>
+      </Button>
+      <Button click={stopCountdown} disable={disableStopButton}>
         Стоп
-      </button>
+      </Button>
     </>
   );
 };

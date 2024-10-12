@@ -1,5 +1,27 @@
 import { useEffect, useState } from "react";
-import "./style.css";
+import styled from "styled-components";
+import Button from "./Button";
+
+const WrapComponent = styled.div`
+border: 5px solid lightblue;
+border-radius: 10px;
+padding: 10px
+`
+
+const Title = styled.h1`
+  font-weight: 800;
+  text-align: center;
+  font-size: 60px;
+  margin: 10px;
+`;
+
+const TimerOut = styled.div`
+  margin-bottom: 10px;
+  padding: 8px;
+  text-align: center;
+  font-size: 50px;
+  color: #3e3eb9;
+`;
 
 const Timer = () => {
   const [seconds, setSeconds] = useState(0);
@@ -48,20 +70,20 @@ const Timer = () => {
   }, [isPause]);
 
   return (
-    <div className="App">
-      <div>Секундомер</div>
-      <div>
+    <WrapComponent className="App">
+      <Title>Секундомер</Title>
+      <TimerOut>
         {`${hours < 10 ? `0${hours}` : hours}:${
           minutes < 10 ? `0${minutes}` : minutes
         }:${seconds < 10 ? `0${seconds}` : seconds}`}
-      </div>
-      <button onClick={handleisPausePlayClick}>
+      </TimerOut>
+      <Button click={handleisPausePlayClick}>
         {startOrStopButton ? "Старт" : "Пауза"}
-      </button>
-      <button onClick={stopTimer} disabled={disableStopButton}>
+      </Button>
+      <Button click={stopTimer} disable={disableStopButton}>
         Стоп
-      </button>
-    </div>
+      </Button>
+    </WrapComponent>
   );
 };
 

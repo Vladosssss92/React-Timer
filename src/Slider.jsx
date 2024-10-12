@@ -23,6 +23,7 @@ const Slider = () => {
     setSeconds(0);
     setMinutes(0);
     setSlider(0);
+    refProgressTime.current = { minutes: 0, seconds: 0 };
   };
 
   const handlePausePlayClick = () => {
@@ -71,6 +72,7 @@ const Slider = () => {
         setStop(true);
         setStartOrStopButton(true);
         setDidsableInput(false);
+        refProgressTime.current = { minutes: 0, seconds: 0 };
       }
     };
     const id = setInterval(countdown, 1000);
@@ -122,10 +124,7 @@ const Slider = () => {
           seconds < 10 ? `0${seconds}` : seconds
         }`}
       </div>
-      <Progress
-        seconds={refProgressTime.current.seconds}
-        minutes={refProgressTime.current.minutes}
-      />
+      <Progress seconds={seconds} minutes={minutes} timeRef={refProgressTime} />
       <button onClick={handlePausePlayClick}>
         {startOrStopButton ? "Старт" : "Пауза"}
       </button>

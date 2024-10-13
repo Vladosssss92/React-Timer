@@ -16,7 +16,7 @@ const WrapTimeInput = styled.div`
 `;
 
 const TimeInput = styled.input`
-  font-size: 18px;
+  font-size: 30px;
   width: 45%;
   height: 40px;
   border: 1px solid gray;

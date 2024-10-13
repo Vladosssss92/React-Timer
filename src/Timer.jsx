@@ -3,10 +3,10 @@ import styled from "styled-components";
 import Button from "./Button";
 
 const WrapComponent = styled.div`
-border: 5px solid lightblue;
-border-radius: 10px;
-padding: 10px
-`
+  border: 5px solid lightblue;
+  border-radius: 10px;
+  padding: 10px;
+`;
 
 const Title = styled.h1`
   font-weight: 800;
@@ -67,7 +67,7 @@ const Timer = () => {
     return () => {
       clearInterval(id);
     };
-  }, [isPause]);
+  }, [seconds, isPause]);
 
   return (
     <WrapComponent className="App">

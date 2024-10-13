@@ -11,7 +11,6 @@ const ButtonS = styled.button`
 `;
 
 const Button = ({ children, click, disable }) => {
-  console.log(click);
   return (
     <>
       <ButtonS onClick={click} disabled={disable}>

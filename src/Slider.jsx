@@ -1,14 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import styled from "styled-components";
 import Progress from "./Progress";
 import Button from "./Button";
-
-const Title = styled.h1`
-  font-weight: 800;
-  text-align: center;
-  font-size: 60px;
-  margin: 10px;
-`;
+import Title from "./Title";
 
 const WrapTimeInput = styled.div`
   display: flex;
@@ -22,6 +16,9 @@ const TimeInput = styled.input`
   border: 1px solid gray;
   border-radius: 8px;
   color: #3e3eb9;
+  &:disabled {
+    color: lightgray;
+  }
 `;
 
 const TimeInputRange = styled.input`
@@ -52,7 +49,7 @@ const Slider = () => {
   if (!seconds && !minutes) {
     disableStopButton = true;
   }
-  const stopCountdown = () => {
+  const handleStopClick = useCallback(() => {
     setStartOrStopButton(true);
     setDidsableInput(false);
     setStop(true);
@@ -60,10 +57,10 @@ const Slider = () => {
     setMinutes(0);
     setSlider(0);
     refProgressTime.current = { minutes: 0, seconds: 0 };
-  };
+  }, []);
 
   const handlePausePlayClick = () => {
-    if (!seconds && !minutes) {
+    if (disableStopButton) {
       setDidsableInput(false);
       return;
     } else {
@@ -164,7 +161,7 @@ const Slider = () => {
       <Button click={handlePausePlayClick}>
         {startOrStopButton ? "Старт" : "Пауза"}
       </Button>
-      <Button click={stopCountdown} disable={disableStopButton}>
+      <Button click={handleStopClick} disable={disableStopButton}>
         Стоп
       </Button>
     </>

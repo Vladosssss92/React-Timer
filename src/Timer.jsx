@@ -1,18 +1,13 @@
-import { useEffect, useState } from "react";
+import React from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import styled from "styled-components";
 import Button from "./Button";
+import Title from "./Title";
 
 const WrapComponent = styled.div`
   border: 5px solid lightblue;
   border-radius: 10px;
   padding: 10px;
-`;
-
-const Title = styled.h1`
-  font-weight: 800;
-  text-align: center;
-  font-size: 60px;
-  margin: 10px;
 `;
 
 const TimerOut = styled.div`
@@ -33,18 +28,18 @@ const Timer = () => {
   let disableStopButton = false;
   if (!seconds && !minutes && !hours) disableStopButton = true;
 
-  const handleisPausePlayClick = () => {
+  const handlePausePlayClick = useCallback(() => {
     setIsPause((prev) => !prev);
     setStartOrStopButton((prev) => !prev);
-  };
+  }, []);
 
-  const stopTimer = () => {
+  const handleStopClick = useCallback(() => {
     setStartOrStopButton(true);
     setIsPause(true);
     setSeconds(0);
     setMinutes(0);
     setHours(0);
-  };
+  }, []);
 
   useEffect(() => {
     const timer = () => {
@@ -77,10 +72,10 @@ const Timer = () => {
           minutes < 10 ? `0${minutes}` : minutes
         }:${seconds < 10 ? `0${seconds}` : seconds}`}
       </TimerOut>
-      <Button click={handleisPausePlayClick}>
+      <Button click={handlePausePlayClick}>
         {startOrStopButton ? "Старт" : "Пауза"}
       </Button>
-      <Button click={stopTimer} disable={disableStopButton}>
+      <Button click={handleStopClick} disable={disableStopButton}>
         Стоп
       </Button>
     </WrapComponent>

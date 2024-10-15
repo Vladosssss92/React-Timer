@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 
 const ButtonS = styled.button`
@@ -10,14 +11,16 @@ const ButtonS = styled.button`
   border: 1px solid gray;
 `;
 
-const Button = ({ children, click, disable }) => {
+const Button = React.memo(({ children, click, disable }) => {
+  console.log('Рендер ' + children);
   return (
+
     <>
       <ButtonS onClick={click} disabled={disable}>
         {children}
       </ButtonS>
     </>
   );
-};
+});
 
 export default Button;

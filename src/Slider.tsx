@@ -100,6 +100,10 @@ const Slider: FC = () => {
     }
   };
 
+  const clearInput = (e) => {
+    e.target.value = null;
+  }
+
   useEffect(() => {
     const countdown = () => {
       if (seconds >= 1) {
@@ -136,6 +140,7 @@ const Slider: FC = () => {
           min={0}
           max={720}
           onChange={onChangeinputMinutes}
+          onClick={clearInput}
           value={!disableInput ? minutes : 0}
           disabled={disableInput}
         />
@@ -145,6 +150,7 @@ const Slider: FC = () => {
           min={0}
           max={59}
           onChange={onChangeinputSeconds}
+          onClick={clearInput}
           value={!disableInput ? seconds : 0}
           disabled={disableInput}
         />

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback, FC, HTMLInputTypeAttribute } from "react";
+import React, { useEffect, useRef, useState, useCallback, FC } from "react";
 import styled from "styled-components";
 import Progress from "./Progress";
 import Button from "./Button";

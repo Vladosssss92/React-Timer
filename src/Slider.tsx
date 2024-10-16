@@ -53,6 +53,7 @@ const Slider: FC = () => {
   let disableStopButton = false;
   if (!seconds && !minutes) {
     disableStopButton = true;
+
   }
   const handleStopClick = useCallback(() => {
     setStartOrStopButton(true);
@@ -100,8 +101,10 @@ const Slider: FC = () => {
     }
   };
 
+  // нужно типизировать !!!
   const clearInput = (e) => {
-    e.target.value = null;
+    console.log(e);
+    e.target.value = '';
   }
 
   useEffect(() => {
@@ -116,6 +119,7 @@ const Slider: FC = () => {
         setStop(true);
         setStartOrStopButton(true);
         setDidsableInput(false);
+        setSlider(0);
         refProgressTime.current = { minutes: 0, seconds: 0 };
       }
     };
@@ -135,7 +139,6 @@ const Slider: FC = () => {
       <Title>Таймер</Title>
       <WrapTimeInput>
         <TimeInput
-          type="number"
           className="inputMinutes"
           min={0}
           max={720}
@@ -145,7 +148,6 @@ const Slider: FC = () => {
           disabled={disableInput}
         />
         <TimeInput
-          type="number"
           className="inputSecond"
           min={0}
           max={59}

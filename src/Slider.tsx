@@ -79,15 +79,14 @@ const Slider: FC = () => {
   const onChangeinputSeconds = (e:React.ChangeEvent<HTMLInputElement>) => {
     setSeconds(+e.target.value);
     if (+e.target.value > 59) setSeconds(59);
-    setSlider(+seconds + minutes * 60);
+    setSlider(+e.target.value + minutes * 60);
   };
-
-
 
   const onChangeinputMinutes = (e:React.ChangeEvent<HTMLInputElement>) => {
     setMinutes(+e.target.value);
+    setSlider(+seconds + (+e.target.value * 60));
     if (+e.target.value > 720) setMinutes(720);
-    setSlider(+seconds + minutes * 60);
+    
   };
 
   const onChangeSlider = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -100,6 +99,7 @@ const Slider: FC = () => {
       setMinutes(0);
     }
   };
+
   useEffect(() => {
     const countdown = () => {
       if (seconds >= 1) {
@@ -125,6 +125,7 @@ const Slider: FC = () => {
       clearInterval(id);
     };
   }, [seconds, stop]);
+  
   return (
     <>
       <Title>Таймер</Title>

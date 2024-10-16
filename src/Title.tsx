@@ -12,7 +12,6 @@ const TitleS = styled.h1`
   margin: 10px;
 `;
 
-
 const Title = React.memo(({ children }:IProps) => {
   return (
     <>

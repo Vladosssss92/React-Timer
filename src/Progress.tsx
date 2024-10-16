@@ -25,8 +25,6 @@ const Title = styled.h1`
   margin: 10px;
 `;
 
-
-
 const Progress = ({ seconds, minutes, timeRef }:IProgressType) => {
   const resultTime =
     timeRef.current.seconds + timeRef.current.minutes * 60;
@@ -37,7 +35,7 @@ const Progress = ({ seconds, minutes, timeRef }:IProgressType) => {
     <>
       <Title>Прогресс</Title>
       <ProgressTimer>
-        {progress >= 0 ? `${Math.floor(progress)} %` : 100 + " %"}
+        {progress >= 0 ? `${Math.floor(progress)} %` : 'Запустите таймер'}
       </ProgressTimer>
     </>
   );

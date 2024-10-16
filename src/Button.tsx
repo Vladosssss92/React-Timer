@@ -20,9 +20,7 @@ interface ButtonType {
 
 
 const Button: FC<ButtonType> = React.memo(({ children, click, disable }) => {
-  console.log('Рендер ' + children);
   return (
-
     <>
       <ButtonS onClick={click} disabled={disable}>
         {children}

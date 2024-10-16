@@ -4,10 +4,10 @@ import Progress from "./Progress";
 import Button from "./Button";
 import Title from "./Title";
 
-  interface ITypeTimeRef {
-    minutes: number;
-    seconds: number;
-  }
+interface ITypeTimeRef {
+  minutes: number;
+  seconds: number;
+}
 
 const WrapTimeInput = styled.div`
   display: flex;
@@ -15,6 +15,7 @@ const WrapTimeInput = styled.div`
 `;
 
 const TimeInput = styled.input`
+
   font-size: 30px;
   width: 45%;
   height: 40px;
@@ -24,6 +25,7 @@ const TimeInput = styled.input`
   &:disabled {
     color: lightgray;
   }
+  &[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
 `;
 
 const TimeInputRange = styled.input`
@@ -77,20 +79,20 @@ const Slider: FC = () => {
     refProgressTime.current = { minutes: minutes, seconds: seconds };
   };
 
-  const onChangeinputSeconds = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeinputSeconds = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSeconds(+e.target.value);
     if (+e.target.value > 59) setSeconds(59);
     setSlider(+e.target.value + minutes * 60);
   };
 
-  const onChangeinputMinutes = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeinputMinutes = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMinutes(+e.target.value);
     setSlider(+seconds + (+e.target.value * 60));
     if (+e.target.value > 720) setMinutes(720);
-    
+
   };
 
-  const onChangeSlider = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeSlider = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSlider(+e.target.value);
     if (+e.target.value > 59) {
       setMinutes(Math.floor(+e.target.value / 60));
@@ -103,7 +105,6 @@ const Slider: FC = () => {
 
   // нужно типизировать !!!
   const clearInput = (e) => {
-    console.log(e);
     e.target.value = '';
   }
 
@@ -133,12 +134,13 @@ const Slider: FC = () => {
       clearInterval(id);
     };
   }, [seconds, stop]);
-  
+
   return (
     <>
       <Title>Таймер</Title>
       <WrapTimeInput>
         <TimeInput
+          type="number"
           className="inputMinutes"
           min={0}
           max={720}
@@ -148,6 +150,7 @@ const Slider: FC = () => {
           disabled={disableInput}
         />
         <TimeInput
+          type="number"
           className="inputSecond"
           min={0}
           max={59}
@@ -164,14 +167,13 @@ const Slider: FC = () => {
           min={0}
           max={3600}
           onChange={onChangeSlider}
-          value={!disableInput ? slider : 0}
+          value={!disableInput ? slider : ''}
           disabled={disableInput}
         />
       </div>
       <TimerOut>
-        {`${minutes < 10 ? `0${minutes}` : minutes}:${
-          seconds < 10 ? `0${seconds}` : seconds
-        }`}
+        {`${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds
+          }`}
       </TimerOut>
       <Progress seconds={seconds} minutes={minutes} timeRef={refProgressTime} />
       <Button click={handlePausePlayClick}>

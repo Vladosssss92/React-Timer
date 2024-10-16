@@ -1,3 +1,4 @@
+import React, {FC} from "react";
 import Slider from "./Slider";
 import styled from "styled-components";
 
@@ -7,7 +8,7 @@ const WrapComponent = styled.div`
   padding: 10px;
 `;
 
-const Countdown = () => {
+const Countdown: FC = () => {
   return (
     <WrapComponent>
       <Slider />

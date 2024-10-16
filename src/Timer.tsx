@@ -1,5 +1,5 @@
-import React from "react";
-import { useEffect, useState, useCallback, useMemo } from "react";
+import React, {FC} from "react";
+import { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import Title from "./Title";
@@ -18,12 +18,12 @@ const TimerOut = styled.div`
   color: #3e3eb9;
 `;
 
-const Timer = () => {
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [hours, setHours] = useState(0);
-  const [isPause, setIsPause] = useState(true);
-  const [startOrStopButton, setStartOrStopButton] = useState(true);
+const Timer: FC = () => {
+  const [seconds, setSeconds] = useState<number>(0);
+  const [minutes, setMinutes] = useState<number>(0);
+  const [hours, setHours] = useState<number>(0);
+  const [isPause, setIsPause] = useState<boolean>(true);
+  const [startOrStopButton, setStartOrStopButton] = useState<boolean>(true);
 
   let disableStopButton = false;
   if (!seconds && !minutes && !hours) disableStopButton = true;

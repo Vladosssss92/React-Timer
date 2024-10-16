@@ -1,8 +1,13 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState, useCallback, FC, HTMLInputTypeAttribute } from "react";
 import styled from "styled-components";
 import Progress from "./Progress";
 import Button from "./Button";
 import Title from "./Title";
+
+  interface ITypeTimeRef {
+    minutes: number;
+    seconds: number;
+  }
 
 const WrapTimeInput = styled.div`
   display: flex;
@@ -35,15 +40,15 @@ const TimerOut = styled.div`
   color: #3e3eb9;
 `;
 
-const Slider = () => {
-  const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
-  const [slider, setSlider] = useState(0);
-  const [stop, setStop] = useState(false);
-  const [disableInput, setDidsableInput] = useState(false);
-  const [startOrStopButton, setStartOrStopButton] = useState(true);
+const Slider: FC = () => {
+  const [seconds, setSeconds] = useState<number>(0);
+  const [minutes, setMinutes] = useState<number>(0);
+  const [slider, setSlider] = useState<number>(0);
+  const [stop, setStop] = useState<boolean>(false);
+  const [disableInput, setDidsableInput] = useState<boolean>(false);
+  const [startOrStopButton, setStartOrStopButton] = useState<boolean>(true);
 
-  const refProgressTime = useRef({ minutes: +minutes, seconds: +seconds });
+  const refProgressTime = useRef<ITypeTimeRef>({ minutes: 0, seconds: 0 });
 
   let disableStopButton = false;
   if (!seconds && !minutes) {
@@ -68,28 +73,30 @@ const Slider = () => {
     }
     setStop((prev) => !prev);
     setStartOrStopButton((prev) => !prev);
-    refProgressTime.current = { minutes: +minutes, seconds: +seconds };
+    refProgressTime.current = { minutes: minutes, seconds: seconds };
   };
 
-  const onChangeinputSeconds = (e) => {
-    setSeconds(e.target.value);
-    if (e.target.value > 59) setSeconds(59);
+  const onChangeinputSeconds = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setSeconds(+e.target.value);
+    if (+e.target.value > 59) setSeconds(59);
     setSlider(+seconds + minutes * 60);
   };
 
-  const onChangeinputMinutes = (e) => {
-    setMinutes(e.target.value);
-    if (e.target.value > 720) setMinutes(720);
+
+
+  const onChangeinputMinutes = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setMinutes(+e.target.value);
+    if (+e.target.value > 720) setMinutes(720);
     setSlider(+seconds + minutes * 60);
   };
 
-  const onChangeSlider = (e) => {
-    setSlider(e.target.value);
-    if (e.target.value > 59) {
-      setMinutes(Math.floor(e.target.value / 60));
-      setSeconds(e.target.value % 60);
+  const onChangeSlider = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setSlider(+e.target.value);
+    if (+e.target.value > 59) {
+      setMinutes(Math.floor(+e.target.value / 60));
+      setSeconds(+e.target.value % 60);
     } else {
-      setSeconds(e.target.value);
+      setSeconds(+e.target.value);
       setMinutes(0);
     }
   };

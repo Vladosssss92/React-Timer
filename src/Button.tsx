@@ -1,4 +1,4 @@
-import React from "react";
+import React, {FC} from "react";
 import styled from "styled-components";
 
 const ButtonS = styled.button`
@@ -11,7 +11,15 @@ const ButtonS = styled.button`
   border: 1px solid gray;
 `;
 
-const Button = React.memo(({ children, click, disable }) => {
+interface ButtonType {
+  children: string;
+  click: ()=> void;
+  disable?: boolean;
+    
+  }
+
+
+const Button: FC<ButtonType> = React.memo(({ children, click, disable }) => {
   console.log('Рендер ' + children);
   return (
 

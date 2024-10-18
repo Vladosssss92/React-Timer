@@ -55,17 +55,22 @@ const Slider: FC = () => {
   let disableStopButton = false;
   if (!seconds && !minutes) {
     disableStopButton = true;
-
   }
+
   const handleStopClick = useCallback(() => {
-    setStartOrStopButton(true);
-    setDidsableInput(false);
-    setStop(true);
-    setSeconds(0);
-    setMinutes(0);
-    setSlider(0);
-    refProgressTime.current = { minutes: 0, seconds: 0 };
-  }, []);
+    if (!stop) {
+      setStop(true);
+      setStartOrStopButton(prev => !prev);
+    } else {
+      setStartOrStopButton(true);
+      setDidsableInput(false);
+      setStop(true);
+      setSeconds(0);
+      setMinutes(0);
+      setSlider(0);
+      refProgressTime.current = { minutes: 0, seconds: 0 };
+    }
+  }, [stop]);
 
   const handlePausePlayClick = () => {
     if (disableStopButton) {
@@ -79,6 +84,11 @@ const Slider: FC = () => {
     refProgressTime.current = { minutes: minutes, seconds: seconds };
   };
 
+  // нужно типизировать !!!
+  const clearInput = useCallback((e) => {
+    e.target.value = '';
+  }, [])
+
   const onChangeinputSeconds = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSeconds(+e.target.value);
     if (+e.target.value > 59) setSeconds(59);
@@ -89,7 +99,6 @@ const Slider: FC = () => {
     setMinutes(+e.target.value);
     setSlider(+seconds + (+e.target.value * 60));
     if (+e.target.value > 720) setMinutes(720);
-
   };
 
   const onChangeSlider = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,10 +112,6 @@ const Slider: FC = () => {
     }
   };
 
-  // нужно типизировать !!!
-  const clearInput = (e) => {
-    e.target.value = '';
-  }
 
   useEffect(() => {
     const countdown = () => {
@@ -167,7 +172,7 @@ const Slider: FC = () => {
           min={0}
           max={3600}
           onChange={onChangeSlider}
-          value={!disableInput ? slider : ''}
+          value={!disableInput ? slider : 0}
           disabled={disableInput}
         />
       </div>
@@ -180,7 +185,7 @@ const Slider: FC = () => {
         {startOrStopButton ? "Старт" : "Пауза"}
       </Button>
       <Button click={handleStopClick} disable={disableStopButton}>
-        Стоп
+        {startOrStopButton ? "Сброс" : "Пауза/Сброс"}
       </Button>
     </>
   );

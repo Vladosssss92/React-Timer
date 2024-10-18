@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 
 interface IProgressType {
   seconds: number;
   minutes: number;
-  timeRef: { current: {
-    seconds: number;
-    minutes: number;
-  }}
+  timeRef: {
+    current: {
+      seconds: number;
+      minutes: number;
+    }
+  }
 }
 
 const ProgressTimer = styled.div`
@@ -25,12 +27,14 @@ const Title = styled.h1`
   margin: 10px;
 `;
 
-const Progress = ({ seconds, minutes, timeRef }:IProgressType) => {
+const Progress = ({ seconds, minutes, timeRef }: IProgressType) => {
+  const refProgress = useRef(timeRef)
   const resultTime =
     timeRef.current.seconds + timeRef.current.minutes * 60;
   const countDownTime = seconds + minutes * 60;
   const percentOfCountDown = resultTime / 100;
   const progress = 100 - countDownTime / percentOfCountDown;
+  console.log(refProgress.current.current);
   return (
     <>
       <Title>Прогресс</Title>

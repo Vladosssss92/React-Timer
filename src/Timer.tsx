@@ -1,10 +1,10 @@
-import React, {FC} from "react";
+import React, { FC } from "react";
 import { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import Button from "./Button";
 import Title from "./Title";
 
-const WrapComponent = styled.div`
+const Wrap = styled.div`
   border: 5px solid lightblue;
   border-radius: 10px;
   padding: 10px;
@@ -34,12 +34,17 @@ const Timer: FC = () => {
   }, []);
 
   const handleStopClick = useCallback(() => {
-    setStartOrStopButton(true);
-    setIsPause(true);
-    setSeconds(0);
-    setMinutes(0);
-    setHours(0);
-  }, []);
+    if (!isPause) {
+      setIsPause(true);
+      setStartOrStopButton(true);
+    } else {
+      setStartOrStopButton(true);
+      setIsPause(true);
+      setSeconds(0);
+      setMinutes(0);
+      setHours(0);
+    }
+  }, [isPause]);
 
   useEffect(() => {
     const timer = () => {
@@ -55,30 +60,29 @@ const Timer: FC = () => {
         setSeconds((prev) => ++prev);
       }
     };
-    const id = setInterval(timer, 1000);
+    const tick = setInterval(timer, 1000);
     if (isPause) {
-      clearInterval(id);
+      clearInterval(tick);
     }
     return () => {
-      clearInterval(id);
+      clearInterval(tick);
     };
   }, [seconds, isPause]);
 
   return (
-    <WrapComponent className="App">
+    <Wrap className="App">
       <Title>Секундомер</Title>
       <TimerOut>
-        {`${hours < 10 ? `0${hours}` : hours}:${
-          minutes < 10 ? `0${minutes}` : minutes
-        }:${seconds < 10 ? `0${seconds}` : seconds}`}
+        {`${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes
+          }:${seconds < 10 ? `0${seconds}` : seconds}`}
       </TimerOut>
       <Button click={handlePausePlayClick}>
         {startOrStopButton ? "Старт" : "Пауза"}
       </Button>
       <Button click={handleStopClick} disable={disableStopButton}>
-        Стоп
+        {startOrStopButton ? "Сброс" : "Пауза/Сброс"}
       </Button>
-    </WrapComponent>
+    </Wrap>
   );
 };
 

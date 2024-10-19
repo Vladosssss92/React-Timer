@@ -60,17 +60,20 @@ const Timer: FC = () => {
         setSeconds((prev) => ++prev);
       }
     };
+
     const tick = setInterval(timer, 1000);
+
     if (isPause) {
       clearInterval(tick);
     }
+
     return () => {
       clearInterval(tick);
     };
   }, [seconds, isPause]);
 
   return (
-    <Wrap className="App">
+    <Wrap>
       <Title>Секундомер</Title>
       <TimerOut>
         {`${hours < 10 ? `0${hours}` : hours}:${minutes < 10 ? `0${minutes}` : minutes

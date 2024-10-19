@@ -13,7 +13,7 @@ const Wrap = styled.div`
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <StrictMode>
+  <StrictMode>    
     <Wrap>
       <Timer />
       <Countdown />

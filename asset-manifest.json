@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/React-Timer/static/js/main.9f60ef5e.js",
+    "main.js": "/React-Timer/static/js/main.e4afface.js",
     "index.html": "/React-Timer/index.html",
-    "main.9f60ef5e.js.map": "/React-Timer/static/js/main.9f60ef5e.js.map"
+    "main.e4afface.js.map": "/React-Timer/static/js/main.e4afface.js.map"
   },
   "entrypoints": [
-    "static/js/main.9f60ef5e.js"
+    "static/js/main.e4afface.js"
   ]
 }
